@@ -1,7 +1,7 @@
+import { useColor } from '@providers/colorProvider';
 import { LinearGradient } from 'expo-linear-gradient';
 import React from 'react';
 import type { PropsWithChildren } from 'react';
-import { useColor } from 'src/context/colorContext';
 
 interface GradientViewProps extends PropsWithChildren {}
 

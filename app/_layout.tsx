@@ -1,12 +1,11 @@
-import { Text } from '@components/atoms/Text/Text';
-import { DrawerContent } from '@components/organisms/DrawerContent/DrawerContent';
 import type { DrawerContentComponentProps } from '@react-navigation/drawer';
+import { DrawerContent } from '@screens/drawer/DrawerContent';
 import { Color } from '@styles/colors';
 import { Drawer } from 'expo-router/drawer';
 import React from 'react';
 import { useWindowDimensions } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { ColorProvider } from 'src/context/colorContext';
+import { ColorProvider } from 'src/providers/colorProvider';
 
 export default function _layout() {
   const { width: SCREEN_WIDTH } = useWindowDimensions();
