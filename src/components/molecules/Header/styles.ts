@@ -9,7 +9,7 @@ export const HeaderContainer = styled.View`
   padding-bottom: 16px;
   padding-top: ${() => {
     const insets = useSafeAreaInsets();
-    return `${insets.top + 16}px`;
+    return `${insets.top + 12}px`;
   }};
 `;
 

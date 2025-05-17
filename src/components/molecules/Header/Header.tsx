@@ -1,9 +1,11 @@
 import { Text } from '@components/atoms/Text/Text';
 import { Ionicons } from '@expo/vector-icons';
+import { DrawerActions } from '@react-navigation/native';
+import { Color } from '@styles/colors';
+import { useNavigation } from 'expo-router';
 import React from 'react';
 import type { IconNames } from '../../../types/icons';
 import { HeaderContainer, HeaderContent, TouchableIcon } from './styles';
-
 interface HeaderProps {
   title?: string;
   onLeftPress?: () => void;
@@ -19,10 +21,20 @@ export const Header = ({
   leftIcon = 'menu-outline',
   rightIcon = 'filter-outline',
 }: HeaderProps) => {
+  const navigation = useNavigation();
+
+  const handleOnPressLeft = () => {
+    if (onLeftPress) {
+      onLeftPress();
+    } else {
+      navigation.dispatch(DrawerActions.openDrawer());
+    }
+  };
+
   return (
     <HeaderContainer>
-      <TouchableIcon onPress={onLeftPress}>
-        <Ionicons name={leftIcon} size={30} color="black" />
+      <TouchableIcon onPress={handleOnPressLeft}>
+        <Ionicons name={leftIcon} size={30} color={Color.white} />
       </TouchableIcon>
 
       <HeaderContent>
@@ -30,7 +42,7 @@ export const Header = ({
       </HeaderContent>
 
       <TouchableIcon onPress={onRightPress}>
-        <Ionicons name={rightIcon} size={30} color="black" />
+        <Ionicons name={rightIcon} size={30} color={Color.white} />
       </TouchableIcon>
     </HeaderContainer>
   );
