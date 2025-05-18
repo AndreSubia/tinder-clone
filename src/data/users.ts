@@ -4,6 +4,7 @@ import { Color, ColorName } from '@styles/colors';
 export interface User {
   id: number;
   name: string;
+  lastName: string;
   age: number;
   picture_url: string;
   bio?: string;
@@ -13,11 +14,14 @@ export interface User {
     start: string;
     end: string;
   };
+  district?: string;
+  country?: string;
 }
 
 const generateUser = (index: number): User => ({
   id: index,
   name: faker.person.firstName('female'),
+  lastName: faker.person.lastName('female'),
   age: faker.number.int({ min: 18, max: 35 }),
   picture_url:
     index === 0
@@ -37,67 +41,117 @@ export const users: User[] = [
   {
     id: 0,
     name: faker.person.firstName('female'),
+    lastName: faker.person.lastName('female'),
     age: faker.number.int({ min: 18, max: 35 }),
     picture_url:
-      'https://64.media.tumblr.com/6832071186f1bdf468ff7e24da974c13/b2da878a0350fb03-8b/s640x960/f828345da87cceb515fd916fbe040cfc9970d511.jpg',
+      'https://images.unsplash.com/photo-1588358641419-458f7616cbf2?q=80&w=3648&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     background: {
       start: Color.warmOrange,
       end: Color.coral,
     },
+    district: faker.location.city(),
+    country: faker.location.country(),
   },
   {
     id: 1,
     name: faker.person.firstName('female'),
+    lastName: faker.person.lastName('female'),
     age: faker.number.int({ min: 18, max: 35 }),
     picture_url:
-      'https://cdn.shopify.com/s/files/1/0263/7076/8986/files/istockphoto-1189891152-612x612_1024x1024.jpg?v=1659631916',
+      'https://images.unsplash.com/photo-1612874470096-d93a610de87b?q=80&w=3687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     background: {
       start: Color.pink,
       end: Color.black,
     },
+    district: faker.location.city(),
+    country: faker.location.country(),
   },
   {
     id: 2,
     name: faker.person.firstName('female'),
+    lastName: faker.person.lastName('female'),
     age: faker.number.int({ min: 18, max: 35 }),
     picture_url:
-      'https://cdn0-production-images-kly.akamaized.net/ygDKbBXSvk-pM3xty_r7OKmYSqY=/1360x766/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/1622852/original/064821600_1497356278-HL_Daily_Pakistan.jpg',
+      'https://images.unsplash.com/photo-1701351382146-035bd68cdb6d?q=80&w=3648&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     background: {
-      start: Color.purple,
-      end: Color.lightPurple,
+      start: Color.black,
+      end: Color.dust,
     },
+    district: faker.location.city(),
+    country: faker.location.country(),
   },
   {
     id: 3,
     name: faker.person.firstName('female'),
+    lastName: faker.person.lastName('female'),
     age: faker.number.int({ min: 18, max: 35 }),
     picture_url:
-      'https://64.media.tumblr.com/6832071186f1bdf468ff7e24da974c13/b2da878a0350fb03-8b/s640x960/f828345da87cceb515fd916fbe040cfc9970d511.jpg',
+      'https://images.unsplash.com/photo-1612904370780-fbc1a5a4f46d?q=80&w=2624&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     background: {
-      start: Color.lightPurple,
-      end: Color.warmOrange,
+      start: Color.blue,
+      end: Color.black,
     },
+    district: faker.location.city(),
+    country: faker.location.country(),
   },
   {
     id: 4,
     name: faker.person.firstName('female'),
+    lastName: faker.person.lastName('female'),
     age: faker.number.int({ min: 18, max: 35 }),
     picture_url:
-      'https://cdn.shopify.com/s/files/1/0263/7076/8986/files/istockphoto-1189891152-612x612_1024x1024.jpg?v=1659631916',
+      'https://images.unsplash.com/photo-1676904461752-24fb31a33d96?q=80&w=3687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     background: {
-      start: Color.coral,
-      end: Color.purple,
+      start: Color.dust,
+      end: Color.lightPurple,
     },
+    district: faker.location.city(),
+    country: faker.location.country(),
   },
   {
     id: 5,
     name: faker.person.firstName('female'),
+    lastName: faker.person.lastName('female'),
     age: faker.number.int({ min: 18, max: 35 }),
     picture_url:
-      'https://cdn0-production-images-kly.akamaized.net/ygDKbBXSvk-pM3xty_r7OKmYSqY=/1360x766/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/1622852/original/064821600_1497356278-HL_Daily_Pakistan.jpg',
+      'https://images.unsplash.com/photo-1561277151-7e07fb9dd27f?q=80&w=2667&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     background: {
-      start: Color.warmOrange,
-      end: Color.black,
+      start: Color.black,
+      end: Color.warmOrange,
     },
+    district: faker.location.city(),
+    country: faker.location.country(),
+  },
+  {
+    id: 6,
+    name: faker.person.firstName('female'),
+    lastName: faker.person.lastName('female'),
+    age: faker.number.int({ min: 18, max: 35 }),
+    picture_url:
+      'https://images.unsplash.com/photo-1746564695185-0e7e673955bf?q=80&w=2384&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    background: {
+      start: Color.coral,
+      end: Color.pink,
+    },
+    district: faker.location.city(),
+    country: faker.location.country(),
   },
 ];
+
+export const userProfile: User = {
+  id: 1,
+  name: faker.person.firstName('male'),
+  lastName: faker.person.lastName('male'),
+  age: faker.number.int({ min: 18, max: 35 }),
+  picture_url: 'https://randomuser.me/api/portraits/men/4.jpg',
+  background: {
+    start: Color.black,
+    end: Color.black,
+  },
+  district: faker.location.city(),
+  country: faker.location.country(),
+};
+
+export const getUserById = (id: string): User | undefined => {
+  return users.find((user) => user.id === Number(id));
+};

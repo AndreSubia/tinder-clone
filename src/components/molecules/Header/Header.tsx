@@ -1,5 +1,6 @@
 import { Text } from '@components/atoms/Text/Text';
 import { Ionicons } from '@expo/vector-icons';
+import AntDesign from '@expo/vector-icons/AntDesign';
 import { DrawerActions } from '@react-navigation/native';
 import { Color } from '@styles/colors';
 import { useNavigation } from 'expo-router';
@@ -11,7 +12,9 @@ interface HeaderProps {
   onLeftPress?: () => void;
   onRightPress?: () => void;
   leftIcon?: IconNames;
+  leftIconColor?: string;
   rightIcon?: IconNames;
+  rightIconColor?: string;
 }
 
 export const Header = ({
@@ -19,7 +22,9 @@ export const Header = ({
   onLeftPress,
   onRightPress,
   leftIcon = 'menu-outline',
-  rightIcon = 'filter-outline',
+  leftIconColor,
+  rightIcon,
+  rightIconColor,
 }: HeaderProps) => {
   const navigation = useNavigation();
 
@@ -34,7 +39,11 @@ export const Header = ({
   return (
     <HeaderContainer>
       <TouchableIcon onPress={handleOnPressLeft}>
-        <Ionicons name={leftIcon} size={30} color={Color.white} />
+        <Ionicons
+          name={leftIcon}
+          size={30}
+          color={leftIconColor ?? Color.white}
+        />
       </TouchableIcon>
 
       <HeaderContent>
@@ -42,7 +51,19 @@ export const Header = ({
       </HeaderContent>
 
       <TouchableIcon onPress={onRightPress}>
-        <Ionicons name={rightIcon} size={30} color={Color.white} />
+        {rightIcon ? (
+          <Ionicons
+            name={rightIcon}
+            size={30}
+            color={rightIconColor ?? Color.white}
+          />
+        ) : (
+          <AntDesign
+            name={'filter'}
+            size={30}
+            color={rightIconColor ?? Color.white}
+          />
+        )}
       </TouchableIcon>
     </HeaderContainer>
   );

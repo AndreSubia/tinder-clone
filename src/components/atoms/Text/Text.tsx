@@ -9,7 +9,7 @@ interface TextProps {
 }
 
 export const Text = ({
-  color = 'black',
+  color = 'white',
   children,
   variant = 'body',
 }: TextProps) => {

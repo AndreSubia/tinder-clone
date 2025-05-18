@@ -3,20 +3,26 @@ import { Header } from '@components/molecules/Header/Header';
 import { Card } from '@components/organisms/Card/Card';
 import { useColor } from '@providers/colorProvider';
 import { Color } from '@styles/colors';
-import { StatusBar } from 'expo-status-bar';
+import { useFocusEffect } from 'expo-router';
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StatusBar } from 'react-native';
 import {
   runOnJS,
   useAnimatedReaction,
   useSharedValue,
 } from 'react-native-reanimated';
-import { users } from 'src/data/users';
+import { type User, users } from 'src/data/users';
+import { CardListContainer } from './styles';
 
-export default function HomeScreen() {
+const HomeScreen = () => {
+  const [userList] = useState<User[]>(users);
   const { setGradientColors } = useColor();
   const [index, setIndex] = useState(0);
   const currentIndex = useSharedValue(0);
+
+  useFocusEffect(() => {
+    StatusBar.setBarStyle('light-content');
+  });
 
   useEffect(() => {
     setGradientColors({
@@ -27,40 +33,36 @@ export default function HomeScreen() {
 
   useAnimatedReaction(
     () => currentIndex.value,
-    (val, prev) => {
+    (val) => {
       if (Math.floor(val) !== index) {
         runOnJS(setIndex)(Math.floor(val));
+      }
+      // reset cards
+      if (Math.floor(val) >= users.length) {
+        currentIndex.value = 0;
+        runOnJS(setIndex)(0);
       }
     },
   );
 
   return (
     <GradientView>
-      <StatusBar style={'light'} />
       <Header />
-      <View style={styles.cardsContainer}>
-        {users.map((user, index) => {
+      <CardListContainer>
+        {userList.map((user, index) => {
           return (
             <Card
               key={user.id}
               user={user}
-              usersLength={users.length}
+              usersLength={userList.length}
               currentIndex={currentIndex}
               index={index}
             />
           );
         })}
-      </View>
+      </CardListContainer>
     </GradientView>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  cardsContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 16,
-    marginBottom: 32,
-  },
-});
+export default HomeScreen;
