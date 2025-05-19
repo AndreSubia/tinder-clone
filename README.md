@@ -4,8 +4,10 @@
 
 <table align="center">
   <tr>
+  <td><img src="assets/demo/ios_0.png" width="200" alt="Home IOS" /></td>
+    <td width="25"></td>
     <td><img src="assets/demo/ios_1.png" width="200" alt="Drawer IOS" /></td>
-    <td width="50"></td> <!-- espacio -->
+    <td width="25"></td>
     <td><img src="assets/demo/ios_2.png" width="200" alt="Match Screen" /></td>
   </tr>
 </table>
@@ -14,8 +16,10 @@
 
 <table align="center">
   <tr>
+  <td><img src="assets/demo/android_0.png" width="200" alt="Home Android" /></td>
+    <td width="25"></td>
     <td><img src="assets/demo/android_1.png" width="200" alt="Drawer Android" /></td>
-    <td width="50"></td>
+    <td width="25"></td>
     <td><img src="assets/demo/android_2.png" width="200" alt="Bio Screen" /></td>
   </tr>
 </table>

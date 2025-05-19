@@ -1,5 +1,6 @@
 import { Text } from '@components/atoms/Text/Text';
 import { CardInfo } from '@components/molecules/CardInfo/CardInfo';
+import { Filters } from '@components/molecules/Filters/Filters';
 import { Ionicons } from '@expo/vector-icons';
 import { Color } from '@styles/colors';
 import { useRouter } from 'expo-router';
@@ -18,7 +19,12 @@ import Animated, {
 import type { SharedValue } from 'react-native-reanimated';
 import type { User } from 'src/types/data';
 import { createCardGestures } from './gestures';
-import { CardImage, SuperLikeButton } from './styles';
+import {
+  CardImage,
+  CardInfoContainer,
+  FiltersContainer,
+  SuperLikeButton,
+} from './styles';
 
 interface CardProps {
   user: User;
@@ -31,6 +37,9 @@ const Card = ({ user, index, usersLength, currentIndex }: CardProps) => {
   const [cardStatus, setCardStatus] = useState<
     'like' | 'dislike' | 'superlike' | undefined
   >(undefined);
+  const [filterStatus, setFilterStatus] = useState<
+    'friendship' | 'dating' | 'relationship'
+  >('friendship');
   const router = useRouter();
   const { width: SCREEN_WIDTH } = useWindowDimensions();
   const translationX = useSharedValue(0);
@@ -248,23 +257,39 @@ const Card = ({ user, index, usersLength, currentIndex }: CardProps) => {
           </Animated.View>
         )}
 
-        <CardInfo
-          status={cardStatus}
-          onDislike={() => {
-            setCardStatus('dislike');
-            triggerSwipe('left');
-          }}
-          onLike={() => {
-            setCardStatus('like');
-            triggerSwipe('right');
-          }}
-          onSuperLike={() => {
-            setCardStatus('superlike');
-            triggerSuperLike();
-          }}
-          onOpenMoreInfo={() => router.push(`/bio/${user.id}`)}
-          user={user}
-        />
+        <FiltersContainer>
+          <Filters
+            status={filterStatus}
+            onFriendship={() => {
+              setFilterStatus('friendship');
+            }}
+            onDating={() => {
+              setFilterStatus('dating');
+            }}
+            onRelationship={() => {
+              setFilterStatus('relationship');
+            }}
+          />
+        </FiltersContainer>
+        <CardInfoContainer>
+          <CardInfo
+            status={cardStatus}
+            onDislike={() => {
+              setCardStatus('dislike');
+              triggerSwipe('left');
+            }}
+            onLike={() => {
+              setCardStatus('like');
+              triggerSwipe('right');
+            }}
+            onSuperLike={() => {
+              setCardStatus('superlike');
+              triggerSuperLike();
+            }}
+            onOpenMoreInfo={() => router.push(`/bio/${user.id}`)}
+            user={user}
+          />
+        </CardInfoContainer>
       </Animated.View>
     </GestureDetector>
   );

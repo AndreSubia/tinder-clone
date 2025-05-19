@@ -1,10 +1,7 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-  position: absolute;
-  width: 100%;
-  padding-horizontal: 32px;
-  bottom: 32px;
+  flex: 1;
 `;
 
 export const NameContainer = styled.View`
@@ -28,6 +25,6 @@ export const MoreInfoButton = styled.View`
   position: absolute;
   align-items: center;
   justify-content: center;
-  right: 32px;
+  right: 0px;
   top: -8px;
 `;

@@ -9,10 +9,10 @@ export const users: User[] = [
     lastName: faker.person.lastName('female'),
     age: faker.number.int({ min: 18, max: 35 }),
     picture_url:
-      'https://images.unsplash.com/photo-1588358641419-458f7616cbf2?q=80&w=3648&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1561277151-7e07fb9dd27f?q=80&w=2667&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     background: {
-      start: Color.warmOrange,
-      end: Color.coral,
+      start: Color.black,
+      end: Color.warmOrange,
     },
     district: faker.location.city(),
     country: faker.location.country(),
@@ -89,10 +89,10 @@ export const users: User[] = [
     lastName: faker.person.lastName('female'),
     age: faker.number.int({ min: 18, max: 35 }),
     picture_url:
-      'https://images.unsplash.com/photo-1561277151-7e07fb9dd27f?q=80&w=2667&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1588358641419-458f7616cbf2?q=80&w=3648&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
     background: {
-      start: Color.black,
-      end: Color.warmOrange,
+      start: Color.warmOrange,
+      end: Color.coral,
     },
     district: faker.location.city(),
     country: faker.location.country(),

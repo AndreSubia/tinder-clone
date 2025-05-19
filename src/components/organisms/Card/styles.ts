@@ -18,3 +18,16 @@ export const SuperLikeButton = styled.TouchableOpacity`
   border-radius: 20px;
   align-items: center;
 `;
+
+export const FiltersContainer = styled.View`
+  position: absolute;
+  width: 100%;
+  top: 32px;
+`;
+
+export const CardInfoContainer = styled.View`
+  position: absolute;
+  width: 100%;
+  padding-horizontal: 32px;
+  bottom: 32px;
+`;
