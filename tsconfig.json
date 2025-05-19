@@ -9,5 +9,6 @@
       "@screens/*": ["src/screens/*"],
       "@providers/*": ["src/providers/*"]
     }
-  }
+  },
+  "include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
 }

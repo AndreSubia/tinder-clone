@@ -30,6 +30,7 @@ export const ActionButtons = ({
         backgroundColor={Color.white}
         iconColor={status === 'superlike' ? Color.white : Color.red}
         onPress={onSuperLike}
+        elevated
       />
       <ActionButton
         isPressed={status === 'like'}

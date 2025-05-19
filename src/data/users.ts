@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker';
-import { Color, ColorName } from '@styles/colors';
+import { Color } from '@styles/colors';
 
 export interface User {
   id: number;
@@ -7,9 +7,8 @@ export interface User {
   lastName: string;
   age: number;
   picture_url: string;
-  bio?: string;
-  distance?: number;
   interests?: string[];
+  descriptions?: string[];
   background?: {
     start: string;
     end: string;
@@ -17,25 +16,6 @@ export interface User {
   district?: string;
   country?: string;
 }
-
-const generateUser = (index: number): User => ({
-  id: index,
-  name: faker.person.firstName('female'),
-  lastName: faker.person.lastName('female'),
-  age: faker.number.int({ min: 18, max: 35 }),
-  picture_url:
-    index === 0
-      ? ''
-      : `https://randomuser.me/api/portraits/women/${index + 10}.jpg`,
-  bio: faker.person.bio(),
-  distance: faker.number.int({ min: 1, max: 30 }),
-  interests: Array.from({ length: faker.number.int({ min: 2, max: 5 }) }, () =>
-    faker.word.sample(),
-  ),
-});
-
-export const generateUsers = (count = 1): User[] =>
-  Array.from({ length: count }, (_, index) => generateUser(index));
 
 export const users: User[] = [
   {
@@ -51,6 +31,8 @@ export const users: User[] = [
     },
     district: faker.location.city(),
     country: faker.location.country(),
+    interests: ['Viajar', 'Leer', 'Pasarlo bien'],
+    descriptions: ['Femme'],
   },
   {
     id: 1,
@@ -65,6 +47,8 @@ export const users: User[] = [
     },
     district: faker.location.city(),
     country: faker.location.country(),
+    interests: ['Viajar', 'Leer', 'Pasarlo bien'],
+    descriptions: ['Femme'],
   },
   {
     id: 2,
@@ -79,6 +63,8 @@ export const users: User[] = [
     },
     district: faker.location.city(),
     country: faker.location.country(),
+    interests: ['Viajar', 'Leer', 'Pasarlo bien'],
+    descriptions: ['Femme'],
   },
   {
     id: 3,
@@ -93,6 +79,8 @@ export const users: User[] = [
     },
     district: faker.location.city(),
     country: faker.location.country(),
+    interests: ['Viajar', 'Leer', 'Pasarlo bien'],
+    descriptions: ['Femme'],
   },
   {
     id: 4,
@@ -107,6 +95,8 @@ export const users: User[] = [
     },
     district: faker.location.city(),
     country: faker.location.country(),
+    interests: ['Viajar', 'Leer', 'Pasarlo bien'],
+    descriptions: ['Femme'],
   },
   {
     id: 5,
@@ -121,6 +111,8 @@ export const users: User[] = [
     },
     district: faker.location.city(),
     country: faker.location.country(),
+    interests: ['Viajar', 'Leer', 'Pasarlo bien'],
+    descriptions: ['Femme'],
   },
   {
     id: 6,
@@ -135,6 +127,8 @@ export const users: User[] = [
     },
     district: faker.location.city(),
     country: faker.location.country(),
+    interests: ['Viajar', 'Leer', 'Pasarlo bien'],
+    descriptions: ['Femme'],
   },
 ];
 
@@ -150,8 +144,42 @@ export const userProfile: User = {
   },
   district: faker.location.city(),
   country: faker.location.country(),
+  interests: ['Viajar', 'Leer', 'Pasarlo bien'],
+  descriptions: ['Femme'],
 };
 
 export const getUserById = (id: string): User | undefined => {
   return users.find((user) => user.id === Number(id));
+};
+
+export type CarouselItem = {
+  id: string;
+  url: string;
+  color?: string;
+};
+
+export const carouselData = (id: string): CarouselItem[] => {
+  const user = getUserById(id);
+  return [
+    {
+      id: '0',
+      url: user?.picture_url || 'default',
+      color: 'black',
+    },
+    {
+      id: '1',
+      url: 'https://images.unsplash.com/photo-1676904479879-2ef3ce54cdec?q=80&w=3687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      color: 'red',
+    },
+    {
+      id: '2',
+      url: 'https://images.unsplash.com/photo-1563993297290-609c9406efcd?q=80&w=3687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      color: 'blue',
+    },
+    {
+      id: '3',
+      url: 'https://plus.unsplash.com/premium_photo-1669703777428-48a39ccfe8cb?q=80&w=3204&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      color: 'green',
+    },
+  ];
 };

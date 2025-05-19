@@ -1,10 +1,10 @@
 import { GradientView } from '@components/atoms/GradientView/GradientView';
 import { Header } from '@components/molecules/Header/Header';
-import { Card } from '@components/organisms/Card/Card';
+import Card from '@components/organisms/Card/Card';
 import { useColor } from '@providers/colorProvider';
 import { Color } from '@styles/colors';
 import { useFocusEffect } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useMemo, useState } from 'react';
 import { StatusBar } from 'react-native';
 import {
   runOnJS,
@@ -45,22 +45,22 @@ const HomeScreen = () => {
     },
   );
 
+  const renderedCards = useMemo(() => {
+    return userList.map((user, index) => (
+      <Card
+        key={user.id}
+        user={user}
+        usersLength={userList.length}
+        currentIndex={currentIndex}
+        index={index}
+      />
+    ));
+  }, [userList, currentIndex]);
+
   return (
     <GradientView>
       <Header />
-      <CardListContainer>
-        {userList.map((user, index) => {
-          return (
-            <Card
-              key={user.id}
-              user={user}
-              usersLength={userList.length}
-              currentIndex={currentIndex}
-              index={index}
-            />
-          );
-        })}
-      </CardListContainer>
+      <CardListContainer>{renderedCards}</CardListContainer>
     </GradientView>
   );
 };

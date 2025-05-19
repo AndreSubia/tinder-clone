@@ -3,6 +3,7 @@ export enum Color {
   black = '#000000',
   pink = '#ffb1c7',
   pinkLight = '#feb5db',
+  deepPink = '#ff5ca1',
   warmOrange = '#fdb246',
   coral = '#f6797f',
   red = '#ff6b86',

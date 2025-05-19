@@ -2,17 +2,10 @@ import { Text } from '@components/atoms/Text/Text';
 import { CardInfo } from '@components/molecules/CardInfo/CardInfo';
 import { Ionicons } from '@expo/vector-icons';
 import { Color } from '@styles/colors';
-import { Image } from 'expo-image';
 import { useRouter } from 'expo-router';
-import React, { useState } from 'react';
-import {
-  Platform,
-  StyleSheet,
-  TouchableOpacity,
-  View,
-  useWindowDimensions,
-} from 'react-native';
-import { Gesture, GestureDetector } from 'react-native-gesture-handler';
+import React, { memo, useState } from 'react';
+import { StyleSheet, useWindowDimensions } from 'react-native';
+import { GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   interpolate,
   runOnJS,
@@ -24,6 +17,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import type { SharedValue } from 'react-native-reanimated';
 import type { User } from 'src/data/users';
+import { createCardGestures } from './gestures';
 import { CardImage, SuperLikeButton } from './styles';
 
 interface CardProps {
@@ -33,7 +27,7 @@ interface CardProps {
   currentIndex: SharedValue<number>;
 }
 
-export const Card = ({ user, index, usersLength, currentIndex }: CardProps) => {
+const Card = ({ user, index, usersLength, currentIndex }: CardProps) => {
   const [cardStatus, setCardStatus] = useState<
     'like' | 'dislike' | 'superlike' | undefined
   >(undefined);
@@ -74,6 +68,13 @@ export const Card = ({ user, index, usersLength, currentIndex }: CardProps) => {
     },
   );
 
+  const gesture = createCardGestures(
+    translationX,
+    currentIndex,
+    index,
+    setCardStatus,
+  );
+
   const cardAnimatedStyle = useAnimatedStyle(() => ({
     opacity: interpolate(
       currentIndex.value,
@@ -107,29 +108,6 @@ export const Card = ({ user, index, usersLength, currentIndex }: CardProps) => {
       },
     ],
   }));
-
-  const gesture = Gesture.Pan()
-    .onChange((event) => {
-      translationX.value = event.translationX;
-      currentIndex.value = interpolate(
-        Math.abs(translationX.value),
-        [0, 500],
-        [index, index + 0.8],
-      );
-    })
-    .onEnd((event) => {
-      if (Math.abs(event.velocityX) > (Platform.OS === 'ios' ? 400 : 200)) {
-        translationX.value = withSpring(Math.sign(event.velocityX) * 600, {
-          velocity: event.velocityX,
-        });
-        if (Math.sign(event.velocityX) === 1) {
-          runOnJS(setCardStatus)('like');
-        }
-        currentIndex.value = withSpring(index + 1);
-      } else {
-        translationX.value = withSpring(0);
-      }
-    });
 
   const likeIconStyle = useAnimatedStyle(() => ({
     opacity: superLikeActive.value
@@ -284,10 +262,12 @@ export const Card = ({ user, index, usersLength, currentIndex }: CardProps) => {
             setCardStatus('superlike');
             triggerSuperLike();
           }}
-          onOpenMoreInfo={() => router.push(`/user/${user.id}`)}
+          onOpenMoreInfo={() => router.push(`/bio/${user.id}`)}
           user={user}
         />
       </Animated.View>
     </GestureDetector>
   );
 };
+
+export default memo(Card);
