@@ -16,7 +16,7 @@ import { useRouter } from 'expo-router';
 import React from 'react';
 import { View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { userProfile } from 'src/data/users';
+import { userProfile } from 'src/data/data';
 
 const DrawerContent = (props: DrawerContentComponentProps) => {
   const router = useRouter();

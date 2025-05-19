@@ -1,6 +1,6 @@
 import { Color } from '@styles/colors';
-import type { User } from 'src/data/users';
 import type { AvatarShape, AvatarSize } from 'src/types/avatar';
+import type { User } from 'src/types/data';
 import { AvatarContainer, AvatarImage } from './styles';
 
 interface AvatarProps {

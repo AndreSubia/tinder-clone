@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { Color } from '@styles/colors';
 import { act, render } from '@testing-library/react-native';
 import { useSharedValue } from 'react-native-reanimated';
-import type { User } from 'src/data/users';
+import type { User } from 'src/types/data';
 import Card from '../Card/Card';
 
 describe('Card Component', () => {

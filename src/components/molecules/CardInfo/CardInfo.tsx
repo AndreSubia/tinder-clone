@@ -1,7 +1,7 @@
 import { ActionButton } from '@components/atoms/ActionButton/ActionButton';
 import { Text } from '@components/atoms/Text/Text';
 import { Color } from '@styles/colors';
-import type { User } from 'src/data/users';
+import type { User } from 'src/types/data';
 import { ActionButtons } from '../ActionButtons/ActionButtons';
 import {
   Container,

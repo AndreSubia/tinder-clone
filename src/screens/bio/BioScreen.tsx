@@ -23,7 +23,8 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { type CarouselItem, carouselData, getUserById } from 'src/data/users';
+import { carouselData, getUserById } from 'src/data/data';
+import type { CarouselItem } from 'src/types/data';
 import {
   ActionButtonsContainer,
   ChipsContainer,

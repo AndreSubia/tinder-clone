@@ -1,7 +1,7 @@
 import Dot from '@components/atoms/Dot/dots';
 import React from 'react';
 import type { SharedValue } from 'react-native-reanimated';
-import type { CarouselItem } from 'src/data/users';
+import type { CarouselItem } from 'src/types/data';
 import { PaginationContainer } from './styles';
 
 type PaginationProps = {

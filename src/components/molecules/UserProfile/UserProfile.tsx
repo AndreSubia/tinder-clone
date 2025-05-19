@@ -1,7 +1,7 @@
 import { Avatar } from '@components/atoms/Avatar/Avatar';
 import { Text } from '@components/atoms/Text/Text';
-import type { User } from 'src/data/users';
 import type { AvatarSize } from 'src/types/avatar';
+import type { User } from 'src/types/data';
 import { Container, InfoContainer, NameAgeContainer } from './styles';
 
 interface UserProfileProps {

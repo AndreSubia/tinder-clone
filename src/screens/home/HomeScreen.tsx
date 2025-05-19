@@ -4,14 +4,15 @@ import Card from '@components/organisms/Card/Card';
 import { useColor } from '@providers/colorProvider';
 import { Color } from '@styles/colors';
 import { useFocusEffect } from 'expo-router';
-import React, { memo, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { StatusBar } from 'react-native';
 import {
   runOnJS,
   useAnimatedReaction,
   useSharedValue,
 } from 'react-native-reanimated';
-import { type User, users } from 'src/data/users';
+import { users } from 'src/data/data';
+import type { User } from 'src/types/data';
 import { CardListContainer } from './styles';
 
 const HomeScreen = () => {

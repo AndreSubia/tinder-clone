@@ -16,7 +16,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import type { SharedValue } from 'react-native-reanimated';
-import type { User } from 'src/data/users';
+import type { User } from 'src/types/data';
 import { createCardGestures } from './gestures';
 import { CardImage, SuperLikeButton } from './styles';
 

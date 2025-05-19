@@ -1,21 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { Color } from '@styles/colors';
-
-export interface User {
-  id: number;
-  name: string;
-  lastName: string;
-  age: number;
-  picture_url: string;
-  interests?: string[];
-  descriptions?: string[];
-  background?: {
-    start: string;
-    end: string;
-  };
-  district?: string;
-  country?: string;
-}
+import type { CarouselItem, User } from 'src/types/data';
 
 export const users: User[] = [
   {
@@ -150,12 +135,6 @@ export const userProfile: User = {
 
 export const getUserById = (id: string): User | undefined => {
   return users.find((user) => user.id === Number(id));
-};
-
-export type CarouselItem = {
-  id: string;
-  url: string;
-  color?: string;
 };
 
 export const carouselData = (id: string): CarouselItem[] => {

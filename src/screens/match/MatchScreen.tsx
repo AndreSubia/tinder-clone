@@ -14,7 +14,7 @@ import {
   TouchableOpacity,
   useWindowDimensions,
 } from 'react-native';
-import { getUserById } from 'src/data/users';
+import { getUserById } from 'src/data/data';
 import { Toast } from 'toastify-react-native';
 import {
   ContentContainer,
