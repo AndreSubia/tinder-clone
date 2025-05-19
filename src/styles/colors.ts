@@ -15,6 +15,7 @@ export enum Color {
   frost = '#E8E8E8',
   darkestGrey = '#131217',
   blue = '#4d81d7',
+  orange = '#ff856b',
 }
 
 export type ColorName = keyof typeof Color;

@@ -1,11 +1,9 @@
-import { ActionButton } from '@components/atoms/ActionButton/ActionButton';
-import { FilteredButton } from '@components/atoms/FilterButton/FilterButton';
-import { Text } from '@components/atoms/Text/Text';
-import { Color } from '@styles/colors';
+import { FilterButton } from '@components/atoms/FilterButton/FilterButton';
+import type { FilterStatus } from 'src/types/status';
 import { ButtonContainer, FiltersContainer } from './styles';
 
 interface ActionButtonsProps {
-  status?: 'friendship' | 'dating' | 'relationship';
+  status?: FilterStatus;
   onFriendship?: () => void;
   onDating?: () => void;
   onRelationship?: () => void;
@@ -20,29 +18,28 @@ export const Filters = ({
   return (
     <FiltersContainer>
       <ButtonContainer>
-        <FilteredButton
+        <FilterButton
           isPressed={status === 'friendship'}
           onPress={onFriendship}
           backgroundImage={require('../../../../assets/png/friend.png')}
+          caption="Amistad"
         />
-        <Text variant="subNavBold">Amistad</Text>
       </ButtonContainer>
       <ButtonContainer>
-        <FilteredButton
+        <FilterButton
           isPressed={status === 'dating'}
           onPress={onDating}
           backgroundImage={require('../../../../assets/png/dating.png')}
+          caption="Citas"
         />
-        <Text variant="subNavBold">Citas</Text>
       </ButtonContainer>
       <ButtonContainer>
-        <FilteredButton
+        <FilterButton
           isPressed={status === 'relationship'}
           onPress={onRelationship}
           backgroundImage={require('../../../../assets/png/relationship.png')}
+          caption="Relación"
         />
-
-        <Text variant="subNavBold">Relación</Text>
       </ButtonContainer>
     </FiltersContainer>
   );

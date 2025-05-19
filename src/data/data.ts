@@ -16,7 +16,7 @@ export const users: User[] = [
     },
     district: faker.location.city(),
     country: faker.location.country(),
-    interests: ['Viajar', 'Leer', 'Pasarlo bien'],
+    interests: ['Viajar', 'Leer', 'Pasarlo bien', 'Cantar'],
     descriptions: ['Femme'],
   },
   {
@@ -32,7 +32,7 @@ export const users: User[] = [
     },
     district: faker.location.city(),
     country: faker.location.country(),
-    interests: ['Viajar', 'Leer', 'Pasarlo bien'],
+    interests: ['Viajar', 'Comer', 'Pasarlo bien'],
     descriptions: ['Femme'],
   },
   {
@@ -48,8 +48,8 @@ export const users: User[] = [
     },
     district: faker.location.city(),
     country: faker.location.country(),
-    interests: ['Viajar', 'Leer', 'Pasarlo bien'],
-    descriptions: ['Femme'],
+    interests: ['Viajar', 'Leer', 'Salir'],
+    descriptions: ['Femme', 'Divertida'],
   },
   {
     id: 3,
@@ -65,7 +65,7 @@ export const users: User[] = [
     district: faker.location.city(),
     country: faker.location.country(),
     interests: ['Viajar', 'Leer', 'Pasarlo bien'],
-    descriptions: ['Femme'],
+    descriptions: ['Femme', 'Alegre'],
   },
   {
     id: 4,
@@ -80,7 +80,7 @@ export const users: User[] = [
     },
     district: faker.location.city(),
     country: faker.location.country(),
-    interests: ['Viajar', 'Leer', 'Pasarlo bien'],
+    interests: ['Viajar', 'Comer', 'Pasarlo genial', 'Correr'],
     descriptions: ['Femme'],
   },
   {
@@ -96,8 +96,8 @@ export const users: User[] = [
     },
     district: faker.location.city(),
     country: faker.location.country(),
-    interests: ['Viajar', 'Leer', 'Pasarlo bien'],
-    descriptions: ['Femme'],
+    interests: ['Viajar', 'Leer', 'Gym'],
+    descriptions: ['Femme', 'Fit'],
   },
   {
     id: 6,
@@ -112,8 +112,8 @@ export const users: User[] = [
     },
     district: faker.location.city(),
     country: faker.location.country(),
-    interests: ['Viajar', 'Leer', 'Pasarlo bien'],
-    descriptions: ['Femme'],
+    interests: ['Viajar', 'Escribir', 'Nadar'],
+    descriptions: ['Femme', 'Introvertida'],
   },
 ];
 

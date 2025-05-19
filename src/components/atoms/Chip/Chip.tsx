@@ -21,8 +21,8 @@ export const Chip = ({
     <ChipContainer
       colors={[startColor, endColor ?? startColor]}
       locations={[0, 0.9]}
-      start={{ x: 0, y: 0.2 }}
-      end={{ x: 0, y: 1 }}
+      start={{ x: 0.4, y: 0 }}
+      end={{ x: 1, y: 0 }}
     >
       <Text color={textColor} variant="subNavBold">
         {text}

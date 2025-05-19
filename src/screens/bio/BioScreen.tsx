@@ -22,9 +22,9 @@ import Animated, {
   useAnimatedStyle,
   useSharedValue,
 } from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { carouselData, getUserById } from 'src/data/data';
 import type { CarouselItem } from 'src/types/data';
+import type { FilterStatus, InteractionStatus } from 'src/types/status';
 import {
   ActionButtonsContainer,
   ChipsContainer,
@@ -35,11 +35,36 @@ import {
   UserInfoContainer,
 } from './styles';
 
+const getChipColors = (filterStatus: FilterStatus) => {
+  switch (filterStatus) {
+    case 'friendship':
+      return {
+        startColor: Color.lightPurple,
+        endColor: Color.purple,
+      };
+    case 'dating':
+      return {
+        startColor: Color.orange,
+        endColor: Color.warmOrange,
+      };
+    case 'relationship':
+      return {
+        startColor: Color.deepPink,
+        endColor: Color.coral,
+      };
+    default:
+      return {
+        startColor: Color.deepPink,
+        endColor: Color.coral,
+      };
+  }
+};
 interface BioScreenProps {
   userId: string;
+  filterStatus: FilterStatus;
 }
 
-const BioScreen = ({ userId }: BioScreenProps) => {
+const BioScreen = ({ userId, filterStatus }: BioScreenProps) => {
   const user = getUserById(userId);
   const data = carouselData(userId);
   const router = useRouter();
@@ -48,10 +73,7 @@ const BioScreen = ({ userId }: BioScreenProps) => {
   const flatListIndex = useSharedValue(0);
   const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = useWindowDimensions();
   const modalHeight = useSharedValue(200);
-  const insets = useSafeAreaInsets();
-  const [status, setStatus] = useState<
-    'like' | 'dislike' | 'superlike' | undefined
-  >(undefined);
+  const [status, setStatus] = useState<InteractionStatus>(undefined);
 
   const imageAnimatedStyle = useAnimatedStyle(() => {
     const scale = interpolate(
@@ -67,6 +89,8 @@ const BioScreen = ({ userId }: BioScreenProps) => {
       transform: [{ scale }],
     };
   });
+
+  const { startColor, endColor } = getChipColors(filterStatus);
 
   const handleGoBack = () => {
     router.replace('/');
@@ -179,8 +203,8 @@ const BioScreen = ({ userId }: BioScreenProps) => {
                     <Chip
                       key={interest}
                       text={interest}
-                      startColor={Color.deepPink}
-                      endColor={Color.coral}
+                      startColor={startColor}
+                      endColor={endColor}
                     />
                   ))}
                 </ChipsContainer>
@@ -194,8 +218,8 @@ const BioScreen = ({ userId }: BioScreenProps) => {
                   <Chip
                     key={description}
                     text={description}
-                    startColor={Color.deepPink}
-                    endColor={Color.coral}
+                    startColor={startColor}
+                    endColor={endColor}
                   />
                 ))}
               </SectionContainer>

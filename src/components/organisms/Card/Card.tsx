@@ -18,6 +18,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import type { SharedValue } from 'react-native-reanimated';
 import type { User } from 'src/types/data';
+import type { FilterStatus, InteractionStatus } from 'src/types/status';
 import { createCardGestures } from './gestures';
 import {
   CardImage,
@@ -34,12 +35,8 @@ interface CardProps {
 }
 
 const Card = ({ user, index, usersLength, currentIndex }: CardProps) => {
-  const [cardStatus, setCardStatus] = useState<
-    'like' | 'dislike' | 'superlike' | undefined
-  >(undefined);
-  const [filterStatus, setFilterStatus] = useState<
-    'friendship' | 'dating' | 'relationship'
-  >('friendship');
+  const [cardStatus, setCardStatus] = useState<InteractionStatus>(undefined);
+  const [filterStatus, setFilterStatus] = useState<FilterStatus>('friendship');
   const router = useRouter();
   const { width: SCREEN_WIDTH } = useWindowDimensions();
   const translationX = useSharedValue(0);
@@ -286,7 +283,14 @@ const Card = ({ user, index, usersLength, currentIndex }: CardProps) => {
               setCardStatus('superlike');
               triggerSuperLike();
             }}
-            onOpenMoreInfo={() => router.push(`/bio/${user.id}`)}
+            onOpenMoreInfo={() =>
+              router.push({
+                pathname: `./bio/${user.id}`,
+                params: {
+                  filterStatus: filterStatus,
+                },
+              })
+            }
             user={user}
           />
         </CardInfoContainer>

@@ -36,6 +36,7 @@ export const SectionContainer = styled.View`
 export const ChipsContainer = styled.View`
   flex-direction: row;
   gap: 8px;
+  flex-wrap: wrap;
 `;
 
 export const ActionButtonsContainer = styled.View`
