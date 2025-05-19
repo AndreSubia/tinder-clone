@@ -27,6 +27,7 @@ export const UserInfoContainer = styled.View`
 export const InterestsContainer = styled.View`
   flex: 1;
   justify-content: space-between;
+  overflow: hidden;
 `;
 
 export const SectionContainer = styled.View`

@@ -50,7 +50,7 @@ export const Typography = {
     fontWeight: 'bold',
   },
   captionSmall: {
-    fontSize: 12,
+    fontSize: 10,
   },
   disclosure: {
     fontSize: 12,

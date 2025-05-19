@@ -5,7 +5,7 @@ import {
   ButtonContainer,
   Container,
   TextContainer,
-} from './style';
+} from './styles';
 
 interface FilterButtonComponentProps {
   size?: number;

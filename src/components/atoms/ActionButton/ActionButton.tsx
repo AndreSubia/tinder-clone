@@ -2,7 +2,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { Color } from '@styles/colors';
 import { TouchableOpacity } from 'react-native';
 import type { IconNames } from 'src/types/icons';
-import { ActionButtonContainer, ActionButtonGradientContainer } from './style';
+import { ActionButtonContainer, ActionButtonGradientContainer } from './styles';
 
 interface ActionButtonsProps {
   isPressed?: boolean;

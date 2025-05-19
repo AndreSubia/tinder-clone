@@ -12,11 +12,9 @@ import {
   useSharedValue,
 } from 'react-native-reanimated';
 import { users } from 'src/data/data';
-import type { User } from 'src/types/data';
 import { CardListContainer } from './styles';
 
 const HomeScreen = () => {
-  const [userList] = useState<User[]>(users);
   const { setGradientColors } = useColor();
   const [index, setIndex] = useState(0);
   const currentIndex = useSharedValue(0);
@@ -47,16 +45,16 @@ const HomeScreen = () => {
   );
 
   const renderedCards = useMemo(() => {
-    return userList.map((user, index) => (
+    return users.map((user, index) => (
       <Card
         key={user.id}
         user={user}
-        usersLength={userList.length}
+        usersLength={users.length}
         currentIndex={currentIndex}
         index={index}
       />
     ));
-  }, [userList, currentIndex]);
+  }, [currentIndex]);
 
   return (
     <GradientView>

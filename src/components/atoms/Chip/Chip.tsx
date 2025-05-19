@@ -2,7 +2,7 @@ import { Text } from '@components/atoms/Text/Text';
 import { Color } from '@styles/colors';
 import type { ColorName } from '@styles/colors';
 import React from 'react';
-import { ChipContainer } from './style';
+import { ChipContainer } from './styles';
 
 interface ChipProps {
   text: string;

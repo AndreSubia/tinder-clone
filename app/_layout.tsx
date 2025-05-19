@@ -1,33 +1,37 @@
 import type { DrawerContentComponentProps } from '@react-navigation/drawer';
-import DrawerContent from '@screens/drawer/DrawerContent';
-import { Color } from '@styles/colors';
 import { Drawer } from 'expo-router/drawer';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useWindowDimensions } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { ColorProvider } from 'src/providers/colorProvider';
 import ToastManager from 'toastify-react-native';
 
-export default function _layout() {
-  const { width: SCREEN_WIDTH } = useWindowDimensions();
+import DrawerContent from '@screens/drawer/DrawerContent';
+import { Color } from '@styles/colors';
+import { ColorProvider } from 'src/providers/colorProvider';
+
+export default function Layout() {
+  const { width } = useWindowDimensions();
+
+  const renderDrawerContent = useMemo(() => {
+    return (props: DrawerContentComponentProps) => <DrawerContent {...props} />;
+  }, []);
+
   return (
     <ColorProvider>
-      <GestureHandlerRootView>
+      <GestureHandlerRootView style={{ flex: 1 }}>
         <Drawer
           screenOptions={{
             headerShown: false,
             drawerStyle: {
               backgroundColor: Color.pink,
-              width: SCREEN_WIDTH * 0.45,
+              width: width * 0.45,
             },
             swipeEnabled: true,
             swipeEdgeWidth: 50,
             overlayColor: 'transparent',
             drawerType: 'slide',
           }}
-          drawerContent={(props: DrawerContentComponentProps) => (
-            <DrawerContent {...props} />
-          )}
+          drawerContent={renderDrawerContent}
         />
         <ToastManager />
       </GestureHandlerRootView>

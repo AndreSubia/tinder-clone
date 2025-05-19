@@ -4,8 +4,13 @@ import { Filters } from '@components/molecules/Filters/Filters';
 import { Ionicons } from '@expo/vector-icons';
 import { Color } from '@styles/colors';
 import { useRouter } from 'expo-router';
-import React, { memo, useState } from 'react';
-import { StyleSheet, useWindowDimensions } from 'react-native';
+import React, { memo, useCallback, useState } from 'react';
+import {
+  type StyleProp,
+  StyleSheet,
+  type ViewStyle,
+  useWindowDimensions,
+} from 'react-native';
 import { GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   interpolate,
@@ -16,8 +21,10 @@ import Animated, {
   withSpring,
   withTiming,
 } from 'react-native-reanimated';
-import type { SharedValue } from 'react-native-reanimated';
+
+import type { AnimatedStyle, SharedValue } from 'react-native-reanimated';
 import type { User } from 'src/types/data';
+import type { IconNames } from 'src/types/icons';
 import type { FilterStatus, InteractionStatus } from 'src/types/status';
 import { createCardGestures } from './gestures';
 import {
@@ -34,46 +41,30 @@ interface CardProps {
   currentIndex: SharedValue<number>;
 }
 
-const Card = ({ user, index, usersLength, currentIndex }: CardProps) => {
-  const [cardStatus, setCardStatus] = useState<InteractionStatus>(undefined);
-  const [filterStatus, setFilterStatus] = useState<FilterStatus>('friendship');
+const Card = memo(({ user, index, usersLength, currentIndex }: CardProps) => {
   const router = useRouter();
   const { width: SCREEN_WIDTH } = useWindowDimensions();
-  const translationX = useSharedValue(0);
-  const superLikeActive = useSharedValue(0);
   const CARD_WIDTH = SCREEN_WIDTH * 0.85;
 
-  const triggerSwipe = (direction: 'left' | 'right') => {
-    const multiplier = direction === 'left' ? -1 : 1;
-    translationX.value = withSpring(multiplier * 700, {
-      velocity: multiplier * 50,
-      damping: 20,
-      stiffness: 90,
-      mass: 2.2,
-    });
-    currentIndex.value = index + 1;
-  };
-
-  const triggerSuperLike = () => {
-    setCardStatus('superlike');
-    superLikeActive.value = withTiming(1, {
-      duration: 1000,
-    });
-  };
+  // Shared values
+  const translationX = useSharedValue(0);
+  const superLikeActive = useSharedValue(0);
+  const [cardStatus, setCardStatus] = useState<InteractionStatus>(undefined);
+  const [filterStatus, setFilterStatus] = useState<FilterStatus>('friendship');
 
   useAnimatedReaction(
     () => currentIndex.value,
     (value) => {
       if (value === 0) {
-        translationX.value = withTiming(0, {
-          duration: 1500,
-        });
+        translationX.value = withTiming(0, { duration: 1000 });
         superLikeActive.value = 0;
         runOnJS(setCardStatus)(undefined);
       }
     },
+    [currentIndex],
   );
 
+  // Gesture handlers
   const gesture = createCardGestures(
     translationX,
     currentIndex,
@@ -81,6 +72,50 @@ const Card = ({ user, index, usersLength, currentIndex }: CardProps) => {
     setCardStatus,
   );
 
+  // Action handlers
+  const handleDislike = useCallback(() => {
+    setCardStatus('dislike');
+    triggerSwipe('left');
+  }, []);
+
+  const handleLike = useCallback(() => {
+    setCardStatus('like');
+    triggerSwipe('right');
+  }, []);
+
+  const handleSuperLike = useCallback(() => {
+    setCardStatus('superlike');
+    superLikeActive.value = withTiming(1, { duration: 1000 });
+  }, [superLikeActive]);
+
+  const handleOpenMoreInfo = useCallback(() => {
+    router.push({
+      pathname: `./bio/${user.id}`,
+      params: {
+        filterStatus: filterStatus,
+      },
+    });
+  }, [user.id, router, filterStatus]);
+
+  const handleFilterChange = useCallback((newStatus: FilterStatus) => {
+    setFilterStatus(newStatus);
+  }, []);
+
+  const triggerSwipe = useCallback(
+    (direction: 'left' | 'right') => {
+      const multiplier = direction === 'left' ? -1 : 1;
+      translationX.value = withSpring(multiplier * 700, {
+        velocity: multiplier * 50,
+        damping: 20,
+        stiffness: 90,
+        mass: 2.2,
+      });
+      currentIndex.value = index + 1;
+    },
+    [currentIndex, index, translationX],
+  );
+
+  // Animated styles
   const cardAnimatedStyle = useAnimatedStyle(() => ({
     opacity: interpolate(
       currentIndex.value,
@@ -137,13 +172,26 @@ const Card = ({ user, index, usersLength, currentIndex }: CardProps) => {
     ],
   }));
 
-  const superLikeOverlayStyle = useAnimatedStyle(() => ({
-    opacity:
-      cardStatus === 'superlike'
-        ? interpolate(superLikeActive.value, [0, 1], [0, 0.5])
-        : 0,
-    backgroundColor: Color.pink,
-  }));
+  const overlayStyle = useAnimatedStyle(() => {
+    const isSuperLike = cardStatus === 'superlike';
+
+    if (isSuperLike) {
+      return {
+        opacity: interpolate(superLikeActive.value, [0, 1], [0, 0.5]),
+        backgroundColor: Color.pink,
+      };
+    }
+
+    return {
+      opacity: interpolate(
+        Math.abs(translationX.value),
+        [0, CARD_WIDTH / 4, CARD_WIDTH],
+        [0, 0.4, 0.4],
+      ),
+      backgroundColor:
+        Math.sign(translationX.value) < 0 ? Color.smoke : Color.pink,
+    };
+  });
 
   const superLikeTextStyle = useAnimatedStyle(() => ({
     opacity:
@@ -160,27 +208,15 @@ const Card = ({ user, index, usersLength, currentIndex }: CardProps) => {
     ],
   }));
 
-  const overlayStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(
-      Math.abs(translationX.value),
-      [0, CARD_WIDTH / 4, CARD_WIDTH],
-      [0, 0.4, 0.4],
-    ),
-    backgroundColor:
-      Math.sign(translationX.value) < 0 ? Color.smoke : Color.pink,
-  }));
-
   return (
     <GestureDetector gesture={gesture}>
       <Animated.View
         style={[
+          styles.card,
           {
-            position: 'absolute',
-            height: '100%',
             width: CARD_WIDTH,
-            zIndex: usersLength - index,
             backgroundColor: user.background?.end ?? Color.dust,
-            borderRadius: 30,
+            zIndex: usersLength - index,
           },
           cardAnimatedStyle,
         ]}
@@ -190,113 +226,109 @@ const Card = ({ user, index, usersLength, currentIndex }: CardProps) => {
           contentFit="cover"
           transition={500}
         />
-        <Animated.View
-          style={[
-            StyleSheet.absoluteFillObject,
-            {
-              borderRadius: 30,
-            },
-            cardStatus === 'superlike' ? superLikeOverlayStyle : overlayStyle,
-          ]}
+        <Animated.View style={[styles.overlay, overlayStyle]} />
+
+        {/* Like/Dislike icons */}
+        <AnimatedStatusIcon
+          isVisible={cardStatus !== 'superlike'}
+          style={likeIconStyle}
+          name="checkmark-sharp"
+        />
+        <AnimatedStatusIcon
+          isVisible={cardStatus !== 'superlike'}
+          style={dislikeIconStyle}
+          name="close"
         />
 
-        {cardStatus === 'superlike' && (
-          <Animated.View
-            style={[
-              {
-                position: 'absolute',
-                alignSelf: 'center',
-                top: '40%',
-              },
-              superLikeTextStyle,
-            ]}
-          >
-            <SuperLikeButton
-              onPress={() => router.replace(`/match/${user.id}`)}
-            >
-              <Text color="white" variant="h2">
-                SUPER
-              </Text>
-              <Text color="white" variant="h2">
-                LIKE
-              </Text>
-            </SuperLikeButton>
-          </Animated.View>
-        )}
+        {/* Super Like UI */}
+        <SuperLikeUI style={superLikeTextStyle} userId={user.id} />
 
-        {cardStatus !== 'superlike' && (
-          <Animated.View
-            style={[
-              {
-                position: 'absolute',
-                alignSelf: 'center',
-                top: '45%',
-              },
-              likeIconStyle,
-            ]}
-          >
-            <Ionicons name="checkmark-sharp" size={100} color={Color.white} />
-          </Animated.View>
-        )}
-
-        {cardStatus !== 'superlike' && (
-          <Animated.View
-            style={[
-              {
-                position: 'absolute',
-                alignSelf: 'center',
-                top: '45%',
-              },
-              dislikeIconStyle,
-            ]}
-          >
-            <Ionicons name="close" size={100} color={Color.white} />
-          </Animated.View>
-        )}
-
+        {/* Filters */}
         <FiltersContainer>
           <Filters
             status={filterStatus}
-            onFriendship={() => {
-              setFilterStatus('friendship');
-            }}
-            onDating={() => {
-              setFilterStatus('dating');
-            }}
-            onRelationship={() => {
-              setFilterStatus('relationship');
-            }}
+            onFriendship={() => runOnJS(handleFilterChange)('friendship')}
+            onDating={() => runOnJS(handleFilterChange)('dating')}
+            onRelationship={() => runOnJS(handleFilterChange)('relationship')}
           />
         </FiltersContainer>
+
+        {/* Card Info */}
         <CardInfoContainer>
           <CardInfo
             status={cardStatus}
-            onDislike={() => {
-              setCardStatus('dislike');
-              triggerSwipe('left');
-            }}
-            onLike={() => {
-              setCardStatus('like');
-              triggerSwipe('right');
-            }}
-            onSuperLike={() => {
-              setCardStatus('superlike');
-              triggerSuperLike();
-            }}
-            onOpenMoreInfo={() =>
-              router.push({
-                pathname: `./bio/${user.id}`,
-                params: {
-                  filterStatus: filterStatus,
-                },
-              })
-            }
+            onDislike={handleDislike}
+            onLike={handleLike}
+            onSuperLike={handleSuperLike}
+            onOpenMoreInfo={handleOpenMoreInfo}
             user={user}
           />
         </CardInfoContainer>
       </Animated.View>
     </GestureDetector>
   );
-};
+});
 
-export default memo(Card);
+interface AnimatedStatusIconProps {
+  isVisible: boolean;
+  style: StyleProp<AnimatedStyle<StyleProp<ViewStyle>>>;
+  name: IconNames;
+}
+
+interface SuperLikeUIProps {
+  style: StyleProp<AnimatedStyle<StyleProp<ViewStyle>>>;
+  userId: string | number;
+}
+
+const AnimatedStatusIcon = memo(
+  ({ isVisible, style, name }: AnimatedStatusIconProps) => {
+    if (!isVisible) return null;
+
+    return (
+      <Animated.View style={[styles.iconContainer, style]}>
+        <Ionicons name={name} size={100} color={Color.white} />
+      </Animated.View>
+    );
+  },
+);
+
+const SuperLikeUI = memo(({ style, userId }: SuperLikeUIProps) => {
+  const router = useRouter();
+
+  return (
+    <Animated.View style={[styles.superLikeContainer, style]}>
+      <SuperLikeButton onPress={() => router.replace(`/match/${userId}`)}>
+        <Text color="white" variant="h2">
+          SUPER
+        </Text>
+        <Text color="white" variant="h2">
+          LIKE
+        </Text>
+      </SuperLikeButton>
+    </Animated.View>
+  );
+});
+
+const styles = StyleSheet.create({
+  card: {
+    position: 'absolute',
+    height: '100%',
+    borderRadius: 30,
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    borderRadius: 30,
+  },
+  iconContainer: {
+    position: 'absolute',
+    alignSelf: 'center',
+    top: '45%',
+  },
+  superLikeContainer: {
+    position: 'absolute',
+    alignSelf: 'center',
+    top: '40%',
+  },
+});
+
+export default Card;
