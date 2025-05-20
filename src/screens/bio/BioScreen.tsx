@@ -214,14 +214,16 @@ const BioScreen = ({ userId, filterStatus }: BioScreenProps) => {
                 <Text variant="t2" color="black">
                   Me considero
                 </Text>
-                {user.descriptions?.map((description) => (
-                  <Chip
-                    key={description}
-                    text={description}
-                    startColor={startColor}
-                    endColor={endColor}
-                  />
-                ))}
+                <ChipsContainer>
+                  {user.descriptions?.map((description) => (
+                    <Chip
+                      key={description}
+                      text={description}
+                      startColor={startColor}
+                      endColor={endColor}
+                    />
+                  ))}
+                </ChipsContainer>
               </SectionContainer>
 
               <ActionButtonsContainer>

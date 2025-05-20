@@ -38,11 +38,11 @@
 - Biome (Formatting & Linting)
 ## Prerequisites
 ### Required Software
-- Node (18.x or higher, I'm using v18.17.1 )
-- Bun ( I'm using v1.2.9 )
-- Expo Go (for testing on physical devices)
-- Xcode (for iOS development)
-- Android Studio (for Android development)
+- [Node](https://nodejs.org/es) (18.x or higher, I'm using v18.17.1 )
+- [Bun](https://bun.sh/) ( I'm using v1.2.9 )
+- [Expo Go (for testing on physical devices)](https://expo.dev/go?sdkVersion=51&platform=android&device=true)
+- [Xcode (for iOS development)](https://developer.apple.com/documentation/safari-developer-tools/installing-xcode-and-simulators)
+- [Android Studio (for Android development)](https://developer.android.com/studio)
 - iOS Simulator or Android Emulator
 ## Installation Guide
 ### 1. Environment Setup

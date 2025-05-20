@@ -1,6 +1,6 @@
 import { Color } from '@styles/colors';
 import type React from 'react';
-import { createContext, useContext, useState } from 'react';
+import { createContext, use, useState } from 'react';
 
 type GradientColors = {
   start: string;
@@ -28,7 +28,8 @@ export const ColorProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const useColor = () => {
-  const context = useContext(ColorContext);
+  //React 19
+  const context = use(ColorContext);
   if (!context) {
     throw new Error('useColor debe ser usado dentro de un ColorProvider');
   }
