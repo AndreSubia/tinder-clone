@@ -3,6 +3,11 @@ import { Image } from 'expo-image';
 import { TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 
+interface SelectedContainerProps {
+  size: number;
+  radius: number;
+  isPressed?: boolean;
+}
 interface FilterButtonProps {
   size: number;
   isPressed?: boolean;
@@ -11,6 +16,7 @@ interface FilterButtonProps {
 
 interface TextContainerProps {
   size: number;
+  marginTop: number;
 }
 
 export const Container = styled.View`
@@ -19,7 +25,20 @@ export const Container = styled.View`
   flex: 1;
 `;
 
-export const ButtonContainer = styled(TouchableOpacity)<FilterButtonProps>`
+export const SelectedContainer = styled(
+  TouchableOpacity,
+)<SelectedContainerProps>`
+  position: absolute;
+  zIndex: 1;
+  top: -${({ radius }) => radius}px;
+  width: ${({ size, radius }) => size + radius * 2}px;
+  height: ${({ size, radius }) => size + radius * 2}px;
+  border-radius: ${({ size, radius }) => (size / 2) + radius * 2}px;
+  border-width: ${({ isPressed }) => (isPressed ? 2 : 0)}px;
+  border-color: ${Color.orange};
+`;
+
+export const ButtonContainer = styled.View<FilterButtonProps>`
   width: ${({ size }) => size}px;
   height: ${({ size }) => size}px;
   border-radius: ${({ size }) => size / 2}px;
@@ -36,7 +55,7 @@ export const BackgroundImage = styled(Image)`
 
 export const TextContainer = styled.View<TextContainerProps>`
   position: absolute;
-  top: ${({ size }) => size}px;
+  top: ${({ size, marginTop }) => size + marginTop}px;
   width: ${({ size }) => size * 2}px;
   align-items: center;
 `;

@@ -4,8 +4,11 @@ import {
   BackgroundImage,
   ButtonContainer,
   Container,
+  SelectedContainer,
   TextContainer,
 } from './styles';
+
+const RADIUS = 3;
 
 interface FilterButtonComponentProps {
   size?: number;
@@ -24,15 +27,22 @@ export const FilterButton = ({
 }: FilterButtonComponentProps) => {
   return (
     <Container>
-      <ButtonContainer isPressed={isPressed} size={size} onPress={onPress}>
+      <SelectedContainer
+        isPressed={isPressed}
+        size={size}
+        radius={RADIUS}
+        onPress={onPress}
+      />
+      <ButtonContainer isPressed={isPressed} size={size}>
         <BackgroundImage
           source={backgroundImage}
           style={{ width: size * 0.6, height: size * 0.6 }}
           contentFit="cover"
         />
       </ButtonContainer>
+
       {isPressed && caption && (
-        <TextContainer size={size}>
+        <TextContainer size={size} marginTop={RADIUS}>
           <Text variant="subNavBold">{caption}</Text>
         </TextContainer>
       )}
