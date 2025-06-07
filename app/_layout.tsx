@@ -33,7 +33,7 @@ export default function Layout() {
           }}
           drawerContent={renderDrawerContent}
         />
-        <ToastManager />
+        <ToastManager useModal={false} />
       </GestureHandlerRootView>
     </ColorProvider>
   );

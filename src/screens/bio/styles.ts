@@ -43,4 +43,5 @@ export const ChipsContainer = styled.View`
 export const ActionButtonsContainer = styled.View`
   width: 256px;
   align-self: center;
+  padding-bottom: 2px;
 `;

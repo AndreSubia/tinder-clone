@@ -12,6 +12,7 @@ import {
   StatusBar,
   StyleSheet,
   TouchableOpacity,
+  TouchableWithoutFeedback,
   useWindowDimensions,
 } from 'react-native';
 import { getUserById } from 'src/data/data';
@@ -60,35 +61,39 @@ const MatchScreen = ({ matchId }: MatchScreenProps) => {
         transition={1000}
         style={StyleSheet.absoluteFillObject}
       />
-      <KeyboardView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <ContentContainer height={SCREEN_HEIGHT}>
-          <HeaderContainer>
-            <ActionButton
-              iconName="heart"
-              backgroundColor={Color.red}
-              disabled
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <KeyboardView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <ContentContainer height={SCREEN_HEIGHT}>
+            <HeaderContainer>
+              <ActionButton
+                iconName="heart"
+                backgroundColor={Color.red}
+                disabled
+              />
+              <TextContainer>
+                <Text variant="h3">New</Text>
+                <Text variant="h1">MATCH!</Text>
+                <Text variant="subNavBold">
+                  ¡También le gustas a {user.name}!
+                </Text>
+                <Text variant="subNav">
+                  Estas más cerca de tener su amistad
+                </Text>
+              </TextContainer>
+            </HeaderContainer>
+            <TextInput
+              value={message}
+              onChange={(e) => setMessage(e.nativeEvent.text)}
+              placeholder="Dile algo agradable"
+              onSend={handleSendMessage}
+              onEndEditing={handleSendMessage}
             />
-            <TextContainer>
-              <Text variant="h3">New</Text>
-              <Text variant="h1">MATCH!</Text>
-              <Text variant="subNavBold">
-                ¡También le gustas a {user.name}!
-              </Text>
-              <Text variant="subNav">Estas más cerca de tener su amistad</Text>
-            </TextContainer>
-          </HeaderContainer>
-          <TextInput
-            value={message}
-            onChange={(e) => setMessage(e.nativeEvent.text)}
-            placeholder="Dile algo agradable"
-            onSend={handleSendMessage}
-            onEndEditing={handleSendMessage}
-          />
-          <TouchableOpacity onPress={() => router.replace('/')}>
-            <Text variant="t2">Regresar a Lecafé</Text>
-          </TouchableOpacity>
-        </ContentContainer>
-      </KeyboardView>
+            <TouchableOpacity onPress={() => router.replace('/')}>
+              <Text variant="t2">Regresar a Lecafé</Text>
+            </TouchableOpacity>
+          </ContentContainer>
+        </KeyboardView>
+      </TouchableWithoutFeedback>
     </GradientView>
   );
 };

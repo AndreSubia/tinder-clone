@@ -1,7 +1,7 @@
 import { Text } from '@components/atoms/Text/Text';
 import { Color } from '@styles/colors';
 import React from 'react';
-import { type TextInputProps, TouchableOpacity } from 'react-native';
+import type { TextInputProps } from 'react-native';
 import { InputContainer, SendButton, StyledInput } from './styles';
 
 interface CustomInputProps extends TextInputProps {

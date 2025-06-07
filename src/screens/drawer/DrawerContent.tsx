@@ -12,7 +12,6 @@ import {
   DrawerContentScrollView,
 } from '@react-navigation/drawer';
 import { Color } from '@styles/colors';
-import { useRouter } from 'expo-router';
 import React from 'react';
 import { userProfile } from 'src/data/data';
 import {
@@ -64,17 +63,12 @@ const menuItems = [
 ];
 
 const DrawerContent = (props: DrawerContentComponentProps) => {
-  const router = useRouter();
-
-  const handleNavigation = () => router.replace('/');
+  const handleNavigation = () => props.navigation.closeDrawer();
 
   return (
     <GradientView>
       <HeaderContainer>
-        <CloseButton
-          style={{ left: 32 }}
-          onPress={() => props.navigation.closeDrawer()}
-        />
+        <CloseButton style={{ left: 32 }} onPress={handleNavigation} />
         <UserProfile user={userProfile} avatarSize="medium" />
       </HeaderContainer>
 

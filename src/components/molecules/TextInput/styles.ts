@@ -39,4 +39,7 @@ export const StyledInput = styled.TextInput<{
 
 export const SendButton = styled.TouchableOpacity`
   border-radius: 10px;
+  position: absolute;
+  padding: 10px;
+  right: 16px;
 `;

@@ -13,8 +13,8 @@ type PaginationProps = {
 const Pagination = ({ data, x, screenWidth }: PaginationProps) => {
   return (
     <PaginationContainer>
-      {data.map((_, index) => (
-        <Dot key={index} x={x} index={index} screenWidth={screenWidth} />
+      {data.map((item, index) => (
+        <Dot key={item.id} x={x} index={index} screenWidth={screenWidth} />
       ))}
     </PaginationContainer>
   );

@@ -9,7 +9,6 @@ const MatchLayout = () => {
           name="[matchId]"
           options={{
             headerShown: false,
-            animation: 'fade_from_bottom',
           }}
         />
       </Stack>

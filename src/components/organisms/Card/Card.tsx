@@ -247,9 +247,9 @@ const Card = memo(({ user, index, usersLength, currentIndex }: CardProps) => {
         <FiltersContainer>
           <Filters
             status={filterStatus}
-            onFriendship={() => runOnJS(handleFilterChange)('friendship')}
-            onDating={() => runOnJS(handleFilterChange)('dating')}
-            onRelationship={() => runOnJS(handleFilterChange)('relationship')}
+            onFriendship={() => handleFilterChange('friendship')}
+            onDating={() => handleFilterChange('dating')}
+            onRelationship={() => handleFilterChange('relationship')}
           />
         </FiltersContainer>
 
